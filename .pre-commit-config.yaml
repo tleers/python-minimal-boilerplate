@@ -34,7 +34,7 @@ repos:
       additional_dependencies: []
       minimum_pre_commit_version: "2.9.2"
 -   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: ''
+    rev: 'v1.10.1'
     hooks:
       - id: mypy
         files: src
