@@ -1,33 +1,30 @@
-name: CI incl. formatting & linting
+name: Basic CI
 
-on:
-  push:
-    branches:
-      - main
-      - rye
-  pull_request:
-    branches:
-      - main
-      - rye
-  schedule:
-    - cron: 0 0 * * 1
+on: [push, pull_request]
 
 jobs:
-  linter_and_test:
-    runs-on: ubuntu-22.04
+  basic-ci:
+    runs-on: ubuntu-latest
     strategy:
-      max-parallel: 10
       matrix:
-        python-version: ["3.10"]
+        python-version: ["3.10", "3.11", "3.12"]
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-          architecture: 'x64'
+          architecture: 'x64' # GH does not support arm64, i.e. modern Mac, only x64
       - name: Setup rye
         uses: eifinger/setup-rye@v2
       - name: Install original package
         run: rye sync
-      - name: run precommit hooks
-        run: pre-commit run --all-files
+      - name: Run the formatter
+        run: rye fmt -- --diff
+      - name: Run the linter
+        run: rye lint --fix
+      - name: Run the tests
+        run: rye test
+      - name: mypy
+        uses: jpetrucciani/mypy-check@master
+        with:
+          path: 'src'
