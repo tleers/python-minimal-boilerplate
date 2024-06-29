@@ -33,3 +33,9 @@ jobs:
         run: rye fmt -- --diff
       - name: Run the linter
         run: rye lint --fix
+      - name: Run the tests
+        run: rye test
+      - name: mypy
+        uses: jpetrucciani/mypy-check@master
+        with:
+          path: 'src'
