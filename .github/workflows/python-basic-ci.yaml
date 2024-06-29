@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - rye
   pull_request:
     branches:
       - main
+      - rye
   schedule:
     - cron: 0 0 * * 1
 
