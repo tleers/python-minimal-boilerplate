@@ -1,0 +1,41 @@
+name: CI incl. formatting & linting
+
+on:
+  push:
+    branches:
+      - main
+      - rye
+  pull_request:
+    branches:
+      - main
+      - rye
+  schedule:
+    - cron: 0 0 * * 1
+
+jobs:
+  linter_and_test:
+    runs-on: ubuntu-22.04
+    strategy:
+      max-parallel: 10
+      matrix:
+        python-version: ["3.10"]
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: 'x64'
+      - name: Setup rye
+        uses: eifinger/setup-rye@v2
+      - name: Install original package
+        run: rye sync
+      - name: Run the formatter
+        run: rye fmt -- --diff
+      - name: Run the linter
+        run: rye lint --fix
+      - name: Run the tests
+        run: rye test
+      - name: mypy
+        uses: jpetrucciani/mypy-check@master
+        with:
+          path: 'src'
