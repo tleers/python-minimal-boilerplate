@@ -14,9 +14,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: 'x64' # GH does not support arm64, i.e. modern Mac, only x64
-      - name: Setup rye
+      - name: Setup rye on runner
         uses: eifinger/setup-rye@v2
-      - name: Install original package
+      - name: Install rye dependencies
         run: rye sync
-      - name: run precommit hooks
+      - name: Run precommit CI hooks
         run: rye run pre-commit run --all-files
