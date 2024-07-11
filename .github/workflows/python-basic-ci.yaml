@@ -15,8 +15,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           architecture: 'x64' # GH does not support arm64, i.e. modern Mac, only x64
       - name: Setup rye on runner
-        shell: bash
-        run: curl -sSf https://rye.astral.sh/get | bash
+        uses: eifinger/setup-rye@v3
       - name: Install rye dependencies
         run: rye sync
       - name: Run precommit CI hooks
