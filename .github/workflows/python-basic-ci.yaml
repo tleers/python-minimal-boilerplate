@@ -1,4 +1,4 @@
-name: Basic CI
+name: Basic CI (mirror of local pre-commit CI)
 
 on: [push, pull_request]
 
