@@ -35,8 +35,13 @@ repos:
       minimum_pre_commit_version: "2.9.2"
 -   repo: local
     hooks:
-      - id: mypy
-        name: mypy
+      - id: mypy-src
+        name: mypy-src
         language: system
-        files: src tests
-        entry: rye run mypy
+        entry: rye run mypy 
+        files: src
+      - id: mypy-tests
+        name: mypy-tests
+        language: system
+        entry: rye run mypy --ignore-missing-imports
+        files: tests 
