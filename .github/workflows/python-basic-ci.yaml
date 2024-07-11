@@ -18,13 +18,5 @@ jobs:
         uses: eifinger/setup-rye@v2
       - name: Install original package
         run: rye sync
-      - name: Run the formatter
-        run: rye fmt -- --diff
-      - name: Run the linter
-        run: rye lint --fix
-      - name: Run the tests
-        run: rye test
-      - name: mypy
-        uses: jpetrucciani/mypy-check@master
-        with:
-          path: 'src'
+      - name: run precommit hooks
+        run: pre-commit run --all-files
