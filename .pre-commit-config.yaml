@@ -38,5 +38,5 @@ repos:
       - id: mypy
         name: mypy
         language: system
-        files: src
+        files: src tests
         entry: rye run mypy
